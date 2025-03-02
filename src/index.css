@@ -1,2 +1,97 @@
 @import "tailwindcss";
-@import 'pixel-retroui/dist/index.css';
+
+@theme {
+  --color-ebony-clay-50: #f3f7fb;
+  --color-ebony-clay-100: #e5eaf4;
+  --color-ebony-clay-200: #d0dced;
+  --color-ebony-clay-300: #b0c5e0;
+  --color-ebony-clay-400: #8aa6d0;
+  --color-ebony-clay-500: #6f8ac2;
+  --color-ebony-clay-600: #5c73b4;
+  --color-ebony-clay-700: #5163a4;
+  --color-ebony-clay-800: #465287;
+  --color-ebony-clay-900: #3c466c;
+  --color-ebony-clay-950: #202436;
+  
+  --color-cloudy-50: #f9f8f7;
+  --color-cloudy-100: #f1f0ef;
+  --color-cloudy-200: #e7e3e1;
+  --color-cloudy-300: #d5cfcc;
+  --color-cloudy-400: #b1a7a2;
+  --color-cloudy-500: #a29791;
+  --color-cloudy-600: #8a7e78;
+  --color-cloudy-700: #726863;
+  --color-cloudy-800: #605854;
+  --color-cloudy-900: #534c49;
+  --color-cloudy-950: #2a2725;
+
+  --color-sisal-50: #f9f7f3;
+  --color-sisal-100: #f0eee4;
+  --color-sisal-200: #e0dbc8;
+  --color-sisal-300: #d4ccb4;
+  --color-sisal-400: #b6a681;
+  --color-sisal-500: #a79168;
+  --color-sisal-600: #9a805c;
+  --color-sisal-700: #80684e;
+  --color-sisal-800: #695643;
+  --color-sisal-900: #564738;
+  --color-sisal-950: #2d241d;
+
+  --color-pearl-bush-50: #f9f6f3;
+  --color-pearl-bush-100: #ece2d8;
+  --color-pearl-bush-200: #e2d3c6;
+  --color-pearl-bush-300: #d0b6a1;
+  --color-pearl-bush-400: #bc937b;
+  --color-pearl-bush-500: #af7a60;
+  --color-pearl-bush-600: #a16a55;
+  --color-pearl-bush-700: #865648;
+  --color-pearl-bush-800: #6d473f;
+  --color-pearl-bush-900: #593b35;
+  --color-pearl-bush-950: #2f1e1b;
+} 
+
+@font-face {
+  font-family: pixel;
+  src:  url(./assets/fonts/DisposableDroidBB.ttf),
+        url(./assets/fonts/DisposableDroidBB_bld.ttf),
+        url(./assets/fonts/DisposableDroidBB_bldital.ttf),
+        url(./assets/fonts/DisposableDroidBB_ital.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: var(--color-pearl-bush-200);
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-pearl-bush-300);
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+input[type="color"]::-moz-color-swatch {
+  border: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+:root {
+  background-color: var(--color-gray-0);
+  font-family: pixel;
+  font-size: 1.4vw;
+}
