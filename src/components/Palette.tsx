@@ -1,5 +1,6 @@
 import { useCanvasStore } from "../hooks/useCanvasStore";
 import { usePaletteStore } from "../hooks/usePaletteStore";
+import ColorInput from "./Input/ColorInput";
 
 
 const Palette = () => {
@@ -11,36 +12,34 @@ const Palette = () => {
     setColor(color);
   };
 
-  const handleAddColor = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newColor = e.target.value;
-    addColor(newColor);
-    setSelectedColor(newColor);
-    setColor(newColor);
+  const handleAddColor = (color: string) => {
+    addColor(color);
+    setSelectedColor(color);
+    setColor(color);
   };
 
   return (
     <div className="text-base">
-      <h2 className="text-lg font-bold mb-2 border-b-2 border-affair-800 pb-1">Color Palette</h2>
-      <div className="grid grid-cols-5 gap-2">
+      <h2 className="text-lg font-bold mb-2 border-b-2 border-ebony-clay-950 pb-1">Color Palette</h2>
+      <div className="grid grid-cols-6 w-full gap-1 mb-5">
         {colors.map((color) => (
           <button
             key={color}
             onClick={() => handleColorSelect(color)}
-            className={`w-8 h-8 border-2 ${selectedColor === color ? "border-watusi-200" : "border-affair-800"}`}
+            className={`
+              w-8 h-8 cursor-pointer p-0 m-0 border-2
+              ${selectedColor === color ? "border-cloudy-400" : "border-ebony-clay-950 hover:border-ebony-clay-800"}
+            `}
             style={{ backgroundColor: color }}
             aria-label={`Color ${color}`}
           />
         ))}
       </div>
-      <div className="mt-4">
-        <label className="block mb-1">Custom Color</label>
-        <input
-          type="color"
-          value={selectedColor}
-          onChange={handleAddColor}
-          className="w-full h-10 bg-affair-900 border-2 border-affair-800"
-        />
-      </div>
+      <ColorInput
+        color={selectedColor}
+        onChange={handleAddColor}
+        label="Add Color:"
+      />
     </div>
   );
 };

@@ -12,25 +12,13 @@
   --color-ebony-clay-800: #465287;
   --color-ebony-clay-900: #3c466c;
   --color-ebony-clay-950: #202436;
-
-/*  --color-storm-gray-50: #f7f7f8;
-  --color-storm-gray-100: #efeef0;
-  --color-storm-gray-200: #dbdadd;
-  --color-storm-gray-300: #bbb9c0;
-  --color-storm-gray-400: #96929e; */
-  --color-storm-gray-500: #74707c;
-  /* --color-storm-gray-600: #635f6a;
-  --color-storm-gray-700: #514d57;
-  --color-storm-gray-800: #45424a;
-  --color-storm-gray-900: #3c3a40;
-  --color-storm-gray-950: #28272a;
-
+  
   --color-cloudy-50: #f9f8f7;
   --color-cloudy-100: #f1f0ef;
   --color-cloudy-200: #e7e3e1;
-  --color-cloudy-300: #d5cfcc; */
+  --color-cloudy-300: #d5cfcc;
   --color-cloudy-400: #b1a7a2;
-  /* --color-cloudy-500: #a29791;
+  --color-cloudy-500: #a29791;
   --color-cloudy-600: #8a7e78;
   --color-cloudy-700: #726863;
   --color-cloudy-800: #605854;
@@ -39,9 +27,9 @@
 
   --color-sisal-50: #f9f7f3;
   --color-sisal-100: #f0eee4;
-  --color-sisal-200: #e0dbc8; */
+  --color-sisal-200: #e0dbc8;
   --color-sisal-300: #d4ccb4;
-  /* --color-sisal-400: #b6a681;
+  --color-sisal-400: #b6a681;
   --color-sisal-500: #a79168;
   --color-sisal-600: #9a805c;
   --color-sisal-700: #80684e;
@@ -49,17 +37,17 @@
   --color-sisal-900: #564738;
   --color-sisal-950: #2d241d;
 
-  --color-pearl-bush-50: #f9f6f3; */
+  --color-pearl-bush-50: #f9f6f3;
   --color-pearl-bush-100: #ece2d8;
   --color-pearl-bush-200: #e2d3c6;
   --color-pearl-bush-300: #d0b6a1;
-  /* --color-pearl-bush-400: #bc937b;
+  --color-pearl-bush-400: #bc937b;
   --color-pearl-bush-500: #af7a60;
   --color-pearl-bush-600: #a16a55;
   --color-pearl-bush-700: #865648;
   --color-pearl-bush-800: #6d473f;
   --color-pearl-bush-900: #593b35;
-  --color-pearl-bush-950: #2f1e1b; */
+  --color-pearl-bush-950: #2f1e1b;
 } 
 
 @font-face {
@@ -87,6 +75,19 @@
 
 .scrollbar-custom::-webkit-scrollbar-track {
   background: transparent;
+}
+
+input[type="color"]::-moz-color-swatch {
+  border: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
 }
 
 :root {

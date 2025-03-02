@@ -25,7 +25,7 @@ function App() {
 
       <div className="flex flex-1 flex-col md:flex-row overflow-hidden">
         <Scrollable>
-          <aside className="w-full h-fit min-h-full md:w-64 bg-pearl-bush-200 border-r-4 border-cloudy-400 p-4 flex flex-col">
+          <aside className="w-full h-fit min-h-full md:w-62 bg-pearl-bush-200 border-r-4 border-cloudy-400 p-4 flex flex-col">
             <CanvasControls />
 
             <Palette />

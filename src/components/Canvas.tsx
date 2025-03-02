@@ -1,38 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useCanvasStore } from "../hooks/useCanvasStore";
 
-async function resizeImageData(imageData: ImageData, width: number, height: number) {
-  const resizeWidth = Math.floor(width);
-  const resizeHeight = Math.floor(height);
-
-  const canvas = document.createElement("canvas");
-  canvas.width = resizeWidth;
-  canvas.height = resizeHeight;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return null;
-
-  ctx.imageSmoothingEnabled = false;
-
-  const tempCanvas = document.createElement("canvas");
-  tempCanvas.width = imageData.width;
-  tempCanvas.height = imageData.height;
-  const tempCtx = tempCanvas.getContext("2d");
-  if (!tempCtx) return null;
-  tempCtx.putImageData(imageData, 0, 0);
-
-  ctx.drawImage(tempCanvas, 0, 0, resizeWidth, resizeHeight);
-
-  return ctx.getImageData(0, 0, resizeWidth, resizeHeight);
-}
-
 
 const Canvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gridCanvasRef = useRef<HTMLCanvasElement>(null);
-  const { width, height, pixelScale, color, showGrid } = useCanvasStore();
+  const { size, zoom, pixelScale, color, showGrid, clearCanvas, setClearCanvas } = useCanvasStore();
 
   const [isDrawing, setIsDrawing] = useState(false);
-
 
   // Draws the grid on a separate canvas
   useEffect(() => {
@@ -42,20 +17,20 @@ const Canvas = () => {
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
-    gridCanvas.width = width * pixelScale * dpr;
-    gridCanvas.height = height * pixelScale * dpr;
-    gridCanvas.style.width = `${width * pixelScale}px`;
-    gridCanvas.style.height = `${height * pixelScale}px`;
+    gridCanvas.width = size.width * pixelScale * dpr;
+    gridCanvas.height = size.height * pixelScale * dpr;
+    gridCanvas.style.width = `${size.width * pixelScale}px`;
+    gridCanvas.style.height = `${size.height * pixelScale}px`;
 
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
 
     if (showGrid) {
-      drawGrid(ctx, width, height, pixelScale);
+      drawGrid(ctx, size.width, size.height, pixelScale);
     }
-  }, [width, height, pixelScale, showGrid]);
+  }, [size, pixelScale, showGrid]);
 
-  // Handles drawing on the main canvas
+  // Handles zoom
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -64,15 +39,15 @@ const Canvas = () => {
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
-    const actualWidth = width * pixelScale * dpr;
-    const actualHeight = height * pixelScale * dpr;
+    const actualWidth = size.width * pixelScale * dpr;
+    const actualHeight = size.height * pixelScale * dpr;
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
     canvas.width = actualWidth;
     canvas.height = actualHeight;
-    canvas.style.width = `${width * pixelScale}px`;
-    canvas.style.height = `${height * pixelScale}px`;
+    canvas.style.width = `${size.width * pixelScale}px`;
+    canvas.style.height = `${size.height * pixelScale}px`;
 
     ctx.imageSmoothingEnabled = false;
 
@@ -84,7 +59,41 @@ const Canvas = () => {
     }
 
     drawImage();
-  }, [width, height, pixelScale]);
+  }, [zoom]);
+
+  //Handles resizing
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const actualWidth = size.width * pixelScale * dpr;
+    const actualHeight = size.height * pixelScale * dpr;
+
+    canvas.width = actualWidth;
+    canvas.height = actualHeight;
+    canvas.style.width = `${size.width * pixelScale}px`;
+    canvas.style.height = `${size.height * pixelScale}px`;
+
+    ctx.imageSmoothingEnabled = false;
+
+    ctx.scale(dpr * pixelScale, dpr * pixelScale);
+  }, [size])
+
+  // Clear canvas
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    setClearCanvas(false);
+  }, [clearCanvas])
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDrawing(true);
@@ -100,20 +109,56 @@ const Canvas = () => {
     setIsDrawing(false);
   };
 
+  let lastX: number | null = null;
+  let lastY: number | null = null;
+
   const drawPixel = (e: React.MouseEvent) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
+  
     const rect = canvas.getBoundingClientRect();
     const x = Math.floor((e.clientX - rect.left) / pixelScale);
     const y = Math.floor((e.clientY - rect.top) / pixelScale);
-
+  
     ctx.fillStyle = color;
-    ctx.fillRect(x, y, 1, 1);
+  
+    // If this is the first point, just draw it
+    if (lastX === null || lastY === null) {
+      ctx.fillRect(x, y, 1, 1);
+    } else {
+      // Draw a line between last position and current position
+      drawLine(ctx, lastX, lastY, x, y);
+    }
+  
+    // Update last position
+    lastX = x;
+    lastY = y;
   };
 
+  const drawLine = (ctx: CanvasRenderingContext2D, x0: number, y0: number, x1: number, y1: number) => {
+    let dx = Math.abs(x1 - x0);
+    let dy = Math.abs(y1 - y0);
+    let sx = x0 < x1 ? 1 : -1;
+    let sy = y0 < y1 ? 1 : -1;
+    let err = dx - dy;
+  
+    while (true) {
+      ctx.fillRect(x0, y0, 1, 1); // Draw pixel
+      if (x0 === x1 && y0 === y1) break;
+      let e2 = err * 2;
+      if (e2 > -dy) {
+        err -= dy;
+        x0 += sx;
+      }
+      if (e2 < dx) {
+        err += dx;
+        y0 += sy;
+      }
+    }
+  };
+  
   const drawGrid = (ctx: CanvasRenderingContext2D, width: number, height: number, pixelScale: number) => {
     const gridColor = "rgba(0, 0, 0, 0.2)";
     ctx.strokeStyle = gridColor;
@@ -153,5 +198,29 @@ const Canvas = () => {
     </div>
   );
 };
+
+async function resizeImageData(imageData: ImageData, width: number, height: number) {
+  const resizeWidth = Math.floor(width);
+  const resizeHeight = Math.floor(height);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = resizeWidth;
+  canvas.height = resizeHeight;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+
+  ctx.imageSmoothingEnabled = false;
+
+  const tempCanvas = document.createElement("canvas");
+  tempCanvas.width = imageData.width;
+  tempCanvas.height = imageData.height;
+  const tempCtx = tempCanvas.getContext("2d");
+  if (!tempCtx) return null;
+  tempCtx.putImageData(imageData, 0, 0);
+
+  ctx.drawImage(tempCanvas, 0, 0, resizeWidth, resizeHeight);
+
+  return ctx.getImageData(0, 0, resizeWidth, resizeHeight);
+}
 
 export default Canvas;

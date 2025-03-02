@@ -16,19 +16,19 @@ const NumberInput = ({ value = 0, onChange, label, unit = 1 }: NumberInputProps)
           className="cursor-pointer"
           onClick={() => onChange(value - unit)}
         >
-          <ChevronLeftIcon size={25} color="" strokeWidth={3} radius={1} />
+          <ChevronLeftIcon size={24} strokeWidth={3} radius={1} className="text-ebony-clay-950 hover:text-ebony-clay-800" />
         </button>
         <input
           type="number"
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="border-2 border-ebony-clay-950 rounded-none outline-none focus:border-ebony-clay-800 focus:text-ebony-clay-800 px-1 w-15"
+          className="border-2 border-ebony-clay-950 text-center rounded-none outline-none focus:border-ebony-clay-800 focus:text-ebony-clay-800 px-1 w-15 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         />
         <button
           className="cursor-pointer"
           onClick={() => onChange(value + unit)}
         >
-          <ChevronRightIcon size={25} color="" strokeWidth={3} radius={1} />
+          <ChevronRightIcon strokeWidth={3} radius={1} className="size-6 text-ebony-clay-950 hover:text-ebony-clay-800" />
         </button>
       </div>
 
