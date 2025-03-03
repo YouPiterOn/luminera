@@ -45,10 +45,13 @@ export const useCanvasStore = create<CanvasState>((set) => ({
       pixelScale: Math.round((state.zoom / 100) * Math.max(1, 256 / Math.max(width, height)))
     })),
   setZoom: (zoom) =>
-    set((state) => ({
-      zoom,
-      pixelScale: Math.round((zoom / 100) * Math.max(1, 256 / Math.max(state.size.width, state.size.height))),
-    })),
+    set((state) => {
+      const newZoom = Math.max(50, Math.min(zoom, 500));
+      return {
+        zoom: newZoom,
+        pixelScale: Math.round((newZoom / 100) * Math.max(1, 256 / Math.max(state.size.width, state.size.height))),
+      }
+    }),
   setColor: (color) => set(() => ({ color })),
   setShowGrid: (isOn) => set(() => ({ showGrid: isOn })),
   setClearCanvas: (value) => set(()=> ({ clearCanvas: value })),

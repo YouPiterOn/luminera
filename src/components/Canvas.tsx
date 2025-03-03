@@ -37,7 +37,7 @@ const Canvas = () => {
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
+    
     const dpr = window.devicePixelRatio || 1;
     const actualWidth = size.width * pixelScale * dpr;
     const actualHeight = size.height * pixelScale * dpr;
@@ -109,6 +109,10 @@ const Canvas = () => {
     setIsDrawing(false);
   };
 
+  const handleMouseLeave = () => {
+    setIsDrawing(false);
+  }
+
   let lastX: number | null = null;
   let lastY: number | null = null;
 
@@ -145,7 +149,7 @@ const Canvas = () => {
     let err = dx - dy;
   
     while (true) {
-      ctx.fillRect(x0, y0, 1, 1); // Draw pixel
+      ctx.fillRect(x0, y0, 1, 1);
       if (x0 === x1 && y0 === y1) break;
       let e2 = err * 2;
       if (e2 > -dy) {
@@ -194,6 +198,7 @@ const Canvas = () => {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
       />
     </div>
   );

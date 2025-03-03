@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCanvasStore } from "../hooks/useCanvasStore";
 import Button from "./Button";
 import CheckboxInput from "./Input/CheckboxInput";
-import NumberInput from "./Input/NumberInput";
 import NewCanvasModal from "./NewCanvasModal";
+import { BufferedNumberInput } from "./Input/NumberInput";
 
 const CanvasControls = () => {
   const { showGrid, zoom, setClearCanvas, setZoom, setShowGrid } = useCanvasStore();
 
   const [isNewCanvasModalOpen, setIsNewCanvasModalOpen] = useState(true);
+
+  const [tempZoom, setTempZoom] = useState(zoom);
+
+  useEffect(() => {
+    setTempZoom(zoom);
+  }, [zoom])
 
   return (
     <div className="mb-6 text-base">
@@ -22,11 +28,15 @@ const CanvasControls = () => {
           <Button onClick={() => setIsNewCanvasModalOpen(true)}>New</Button>
         </div>
 
-        <NumberInput
-          value={zoom}
-          onChange={(value) => setZoom(value)}
+        <BufferedNumberInput
+          value={tempZoom}
+          onDone={(value) => {
+            setZoom(value);
+          }}
           unit={50}
           label="Zoom:"
+          max={500}
+          min={50}
         />
 
         <CheckboxInput

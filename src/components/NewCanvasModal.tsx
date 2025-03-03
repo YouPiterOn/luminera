@@ -1,7 +1,7 @@
 import { useCanvasStore } from "../hooks/useCanvasStore";
-import NumberInput from "./Input/NumberInput";
 import Button from "./Button";
 import { useState } from "react";
+import { InstantNumberInput } from "./Input/NumberInput";
 
 type NewCanvasModalProps = {
   onClose?: () => void;
@@ -28,13 +28,13 @@ const NewCanvasModal = ({ onClose }: NewCanvasModalProps) => {
       <div className="flex flex-col gap-4 bg-pearl-bush-200 border-2 border-cloudy-400 text-ebony-clay-950 p-4 shadow-lg w-80 opacity-100">
         <h2 className="text-lg font-bold">New Canvas</h2>
 
-        <NumberInput
+        <InstantNumberInput
           value={tempWidth}
           onChange={(value) => setTempWidth(value)}
           label="Width:"
         />
 
-        <NumberInput
+        <InstantNumberInput
           value={tempHeight}
           onChange={(value) => setTempHeight(value)}
           label="Height:"

@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { useCanvasStore } from "../hooks/useCanvasStore";
 import { usePaletteStore } from "../hooks/usePaletteStore";
+import Button from "./Button";
 import ColorInput from "./Input/ColorInput";
 
 
 const Palette = () => {
   const { colors, selectedColor, addColor, setSelectedColor } = usePaletteStore();
   const { setColor } = useCanvasStore();
+
+  const [tempColor, setTempColor] = useState(selectedColor);
 
   const handleColorSelect = (color: string) => {
     setSelectedColor(color);
@@ -35,11 +39,17 @@ const Palette = () => {
           />
         ))}
       </div>
-      <ColorInput
-        color={selectedColor}
-        onChange={handleAddColor}
-        label="Add Color:"
-      />
+      <div className="flex flex-row justify-between w-full">
+        <Button
+          onClick={() => handleAddColor(tempColor)}
+        >
+          Add Color
+        </Button>
+        <ColorInput
+          color={tempColor}
+          onChange={setTempColor}
+        />
+      </div>
     </div>
   );
 };
