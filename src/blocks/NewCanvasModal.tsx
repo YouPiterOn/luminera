@@ -1,7 +1,7 @@
 import { useCanvasStore } from "../hooks/useCanvasStore";
-import Button from "./Button";
+import Button from "../components/Button";
 import { useState } from "react";
-import { InstantNumberInput } from "./Input/NumberInput";
+import { InstantNumberInput } from "../components/Input/NumberInput";
 
 type NewCanvasModalProps = {
   onClose?: () => void;

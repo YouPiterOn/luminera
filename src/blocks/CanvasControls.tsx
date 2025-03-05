@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useCanvasStore } from "../hooks/useCanvasStore";
-import Button from "./Button";
-import CheckboxInput from "./Input/CheckboxInput";
+import Button from "../components/Button";
+import CheckboxInput from "../components/Input/CheckboxInput";
 import NewCanvasModal from "./NewCanvasModal";
-import { BufferedNumberInput } from "./Input/NumberInput";
+import { BufferedNumberInput } from "../components/Input/NumberInput";
 
 const CanvasControls = () => {
   const { showGrid, zoom, setClearCanvas, setZoom, setShowGrid } = useCanvasStore();

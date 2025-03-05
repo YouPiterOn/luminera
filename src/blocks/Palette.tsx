@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useCanvasStore } from "../hooks/useCanvasStore";
 import { usePaletteStore } from "../hooks/usePaletteStore";
-import Button from "./Button";
-import ColorInput from "./Input/ColorInput";
+import Button from "../components/Button";
+import ColorInput from "../components/Input/ColorInput";
 
 
 const Palette = () => {

@@ -1,6 +1,6 @@
-import Canvas from "./components/Canvas"
-import CanvasControls from "./components/CanvasControls"
-import Palette from "./components/Palette"
+import Canvas from "./blocks/Canvas"
+import CanvasControls from "./blocks/CanvasControls"
+import Palette from "./blocks/Palette"
 import Scrollable from "./components/Scrollable"
 
 function App() {
