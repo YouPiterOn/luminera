@@ -3,6 +3,7 @@ import { useCanvasStore } from "../hooks/useCanvasStore";
 import { usePaletteStore } from "../hooks/usePaletteStore";
 import Button from "../components/Button";
 import ColorInput from "../components/Input/ColorInput";
+import SidebarSection from "../components/SidebarSection";
 
 
 const Palette = () => {
@@ -23,8 +24,7 @@ const Palette = () => {
   };
 
   return (
-    <div className="text-base">
-      <h2 className="text-lg font-bold mb-2 border-b-2 border-ebony-clay-950 pb-1">Color Palette</h2>
+    <SidebarSection name="Color Palette">
       <div className="grid grid-cols-6 w-full gap-1 mb-5">
         {colors.map((color) => (
           <button
@@ -40,17 +40,17 @@ const Palette = () => {
         ))}
       </div>
       <div className="flex flex-row justify-between w-full">
+        <ColorInput
+          color={tempColor}
+          onChange={setTempColor}
+        />
         <Button
           onClick={() => handleAddColor(tempColor)}
         >
           Add Color
         </Button>
-        <ColorInput
-          color={tempColor}
-          onChange={setTempColor}
-        />
       </div>
-    </div>
+    </SidebarSection>
   );
 };
 

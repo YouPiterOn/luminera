@@ -4,11 +4,12 @@ import Button from "../components/Button";
 import CheckboxInput from "../components/Input/CheckboxInput";
 import NewCanvasModal from "./NewCanvasModal";
 import { BufferedNumberInput } from "../components/Input/NumberInput";
+import SidebarSection from "../components/SidebarSection";
 
 const CanvasControls = () => {
   const { showGrid, zoom, setClearCanvas, setZoom, setShowGrid } = useCanvasStore();
 
-  const [isNewCanvasModalOpen, setIsNewCanvasModalOpen] = useState(true);
+  const [isNewCanvasModalOpen, setIsNewCanvasModalOpen] = useState(false);
 
   const [tempZoom, setTempZoom] = useState(zoom);
 
@@ -17,8 +18,7 @@ const CanvasControls = () => {
   }, [zoom])
 
   return (
-    <div className="mb-6 text-base">
-      <h2 className="text-lg font-bold mb-2 border-b-2 border-affair-800 pb-1">Canvas Options</h2>
+    <SidebarSection name="Canvas Controls">
       <div className="space-y-2">
         <div>
           <Button onClick={() => setClearCanvas(true)}>Clear</Button>
@@ -52,7 +52,7 @@ const CanvasControls = () => {
           )}
         </div>
       </div>
-    </div>
+    </SidebarSection>
   );
 };
 
