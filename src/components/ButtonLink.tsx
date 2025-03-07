@@ -1,14 +1,16 @@
+import { Link } from "wouter";
+
 type ButtonProps = {
   children?: React.ReactNode;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  href?: string;
   className?: string;
   highlighted?: boolean;
 }
 
-const Button = ({ children, onClick, className, highlighted = false }: ButtonProps) => {
+const ButtonLink = ({ children, href = '', className, highlighted = false }: ButtonProps) => {
   return (
-    <button
-      onClick={onClick}
+    <Link
+      href={href}
       className={`
         border-2 border-ebony-clay-950 min-w-15 px-1 cursor-pointer
         ${highlighted ? 'bg-ebony-clay-800 text-pearl-bush-50 hover:bg-ebony-clay-900' : 'bg-pearl-bush-200 text-ebony-clay-950 hover:bg-pearl-bush-300'}
@@ -16,8 +18,8 @@ const Button = ({ children, onClick, className, highlighted = false }: ButtonPro
       `}
     >
       {children}
-    </button>
+    </Link>
   );
 };
 
-export default Button;
+export default ButtonLink;

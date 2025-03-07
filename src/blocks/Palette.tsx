@@ -1,11 +1,16 @@
+import { useState } from "react";
 import { useCanvasStore } from "../hooks/useCanvasStore";
 import { usePaletteStore } from "../hooks/usePaletteStore";
-import ColorInput from "./Input/ColorInput";
+import Button from "../components/Button";
+import ColorInput from "../components/Input/ColorInput";
+import SidebarSection from "../components/SidebarSection";
 
 
 const Palette = () => {
   const { colors, selectedColor, addColor, setSelectedColor } = usePaletteStore();
   const { setColor } = useCanvasStore();
+
+  const [tempColor, setTempColor] = useState(selectedColor);
 
   const handleColorSelect = (color: string) => {
     setSelectedColor(color);
@@ -19,8 +24,7 @@ const Palette = () => {
   };
 
   return (
-    <div className="text-base">
-      <h2 className="text-lg font-bold mb-2 border-b-2 border-ebony-clay-950 pb-1">Color Palette</h2>
+    <SidebarSection name="Color Palette">
       <div className="grid grid-cols-6 w-full gap-1 mb-5">
         {colors.map((color) => (
           <button
@@ -35,12 +39,18 @@ const Palette = () => {
           />
         ))}
       </div>
-      <ColorInput
-        color={selectedColor}
-        onChange={handleAddColor}
-        label="Add Color:"
-      />
-    </div>
+      <div className="flex flex-row justify-between w-full">
+        <ColorInput
+          color={tempColor}
+          onChange={setTempColor}
+        />
+        <Button
+          onClick={() => handleAddColor(tempColor)}
+        >
+          Add Color
+        </Button>
+      </div>
+    </SidebarSection>
   );
 };
 

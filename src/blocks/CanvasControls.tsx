@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCanvasStore } from "../hooks/useCanvasStore";
-import Button from "./Button";
-import CheckboxInput from "./Input/CheckboxInput";
-import NumberInput from "./Input/NumberInput";
+import Button from "../components/Button";
+import CheckboxInput from "../components/Input/CheckboxInput";
 import NewCanvasModal from "./NewCanvasModal";
+import { BufferedNumberInput } from "../components/Input/NumberInput";
+import SidebarSection from "../components/SidebarSection";
 
 const CanvasControls = () => {
   const { showGrid, zoom, setClearCanvas, setZoom, setShowGrid } = useCanvasStore();
 
-  const [isNewCanvasModalOpen, setIsNewCanvasModalOpen] = useState(true);
+  const [isNewCanvasModalOpen, setIsNewCanvasModalOpen] = useState(false);
+
+  const [tempZoom, setTempZoom] = useState(zoom);
+
+  useEffect(() => {
+    setTempZoom(zoom);
+  }, [zoom])
 
   return (
-    <div className="mb-6 text-base">
-      <h2 className="text-lg font-bold mb-2 border-b-2 border-affair-800 pb-1">Canvas Options</h2>
+    <SidebarSection name="Canvas Controls">
       <div className="space-y-2">
         <div>
           <Button onClick={() => setClearCanvas(true)}>Clear</Button>
@@ -22,11 +28,15 @@ const CanvasControls = () => {
           <Button onClick={() => setIsNewCanvasModalOpen(true)}>New</Button>
         </div>
 
-        <NumberInput
-          value={zoom}
-          onChange={(value) => setZoom(value)}
+        <BufferedNumberInput
+          value={tempZoom}
+          onDone={(value) => {
+            setZoom(value);
+          }}
           unit={50}
           label="Zoom:"
+          max={500}
+          min={50}
         />
 
         <CheckboxInput
@@ -42,7 +52,7 @@ const CanvasControls = () => {
           )}
         </div>
       </div>
-    </div>
+    </SidebarSection>
   );
 };
 
