@@ -82,3 +82,26 @@ export function setupCanvas(canvas: HTMLCanvasElement, width: number, height: nu
 
   return ctx
 }
+
+export async function createDataUrl(
+  sourceCanvas: HTMLCanvasElement,
+  pixelWidth: number,
+  pixelHeight: number,
+  scale: number = 1
+) {
+  const outputWidth = Math.floor(pixelWidth * scale)
+  const outputHeight = Math.floor(pixelHeight * scale)
+
+  const canvas = document.createElement("canvas")
+  canvas.width = outputWidth
+  canvas.height = outputHeight
+  const ctx = canvas.getContext("2d")
+  if (!ctx) return null
+
+  ctx.imageSmoothingEnabled = false
+
+  ctx.drawImage(sourceCanvas, 0, 0, outputWidth, outputHeight)
+
+  return canvas.toDataURL("image/png");
+}
+

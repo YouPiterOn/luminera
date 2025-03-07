@@ -3,6 +3,7 @@ import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { drawLine, resizeImageData, setupCanvas } from "../utils/canvasUtils"
 import { Size } from "../types/canvas"
+import { useCanvas } from "../context/CanvasContext";
 
 export function useDrawingCanvas(
   size: Size,
@@ -12,7 +13,7 @@ export function useDrawingCanvas(
   clearCanvas: boolean,
   setClearCanvas: (value: boolean) => void,
 ) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useCanvas();
   const [isDrawing, setIsDrawing] = useState(false)
   const lastX = useRef<number | null>(null)
   const lastY = useRef<number | null>(null)
@@ -46,14 +47,14 @@ export function useDrawingCanvas(
     }
 
     drawImage()
-  }, [zoom])
+  }, [canvasRef, zoom])
 
   // Handles resizing
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     setupCanvas(canvas, size.width, size.height, pixelScale)
-  }, [size, pixelScale])
+  }, [canvasRef, size, pixelScale])
 
   // Clear canvas
   useEffect(() => {
@@ -67,7 +68,7 @@ export function useDrawingCanvas(
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     setClearCanvas(false)
-  }, [clearCanvas])
+  }, [canvasRef, clearCanvas])
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDrawing(true)
@@ -119,7 +120,6 @@ export function useDrawingCanvas(
   }
 
   return {
-    canvasRef,
     isDrawing,
     handleMouseDown,
     handleMouseMove,

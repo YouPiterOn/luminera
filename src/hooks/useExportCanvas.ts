@@ -1,0 +1,17 @@
+import { useCanvas } from "../context/CanvasContext";
+import { createDataUrl } from "../utils/canvasUtils";
+
+export function useExportCanvas() {
+  const canvasRef = useCanvas()
+
+  const exportToPNG = (width: number, height: number, scale: number = 1) => {
+    const canvas = canvasRef.current
+    if (!canvas) return null
+
+    const dataUrl = createDataUrl(canvas, width, height, scale)
+
+    return dataUrl;
+  }
+
+  return { exportToPNG }
+}

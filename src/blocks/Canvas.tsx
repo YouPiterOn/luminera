@@ -1,3 +1,4 @@
+import { useCanvas } from "../context/CanvasContext"
 import { useCanvasStore } from "../hooks/useCanvasStore"
 import { useDrawingCanvas } from "../hooks/useDrawingCanvas"
 import { useGridCanvas } from "../hooks/useGridCanvas"
@@ -6,8 +7,9 @@ const Canvas = () => {
   const { size, zoom, pixelScale, color, showGrid, clearCanvas, setClearCanvas } = useCanvasStore()
 
   const gridCanvasRef = useGridCanvas(size, pixelScale, showGrid)
+  const canvasRef = useCanvas();
 
-  const { canvasRef, handleMouseDown, handleMouseMove, handleMouseUp, handleMouseLeave } = useDrawingCanvas(
+  const { handleMouseDown, handleMouseMove, handleMouseUp, handleMouseLeave } = useDrawingCanvas(
     size,
     pixelScale,
     zoom,
