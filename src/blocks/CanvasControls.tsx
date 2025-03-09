@@ -44,13 +44,13 @@ const CanvasControls = () => {
           onChange={(isChecked) => setShowGrid(isChecked)}
           label="Show Grid:"
         />
-        <div>
-          {isNewCanvasModalOpen && (
-            <NewCanvasModal
-              onClose={() => setIsNewCanvasModalOpen(false)}
-            />
-          )}
-        </div>
+      </div>
+      <div>
+        {isNewCanvasModalOpen && (
+          <NewCanvasModal
+            onClose={() => setIsNewCanvasModalOpen(false)}
+          />
+        )}
       </div>
     </SidebarSection>
   );

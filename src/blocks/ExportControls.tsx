@@ -5,7 +5,7 @@ import { useCanvasStore } from "../hooks/useCanvasStore";
 import { useExportCanvas } from "../hooks/useExportCanvas"
 import { InstantNumberInput } from "../components/Input/NumberInput";
 
-const Export = () => {
+const ExportControls = () => {
   const { exportToPNG } = useExportCanvas();
   const { size } = useCanvasStore();
   const [scale, setScale] = useState(1);
@@ -28,11 +28,11 @@ const Export = () => {
         value={scale}
         onChange={(value) => setScale(value)}
       />
-      <div className="mt-3">
+      <div className="mt-2">
         <Button onClick={handleDownload}>Export to PNG</Button>
       </div>
     </SidebarSection>
   )
 }
 
-export default Export;
+export default ExportControls;

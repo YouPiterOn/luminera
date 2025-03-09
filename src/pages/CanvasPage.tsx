@@ -1,8 +1,8 @@
 import Canvas from "../blocks/Canvas"
 import CanvasControls from "../blocks/CanvasControls"
-import Export from "../blocks/Export"
+import ExportControls from "../blocks/ExportControls"
 import Header from "../blocks/Header"
-import Palette from "../blocks/Palette"
+import PaletteControls from "../blocks/PaletteControls"
 import Scrollable from "../components/Scrollable"
 import { CanvasProvider } from "../context/CanvasContext"
 
@@ -18,9 +18,9 @@ const CanvasPage = () => {
             <aside className="w-full h-fit min-h-full md:w-62 bg-pearl-bush-200 border-r-4 border-cloudy-400 p-4 flex flex-col">
               <CanvasControls />
 
-              <Palette />
+              <PaletteControls />
 
-              <Export />
+              <ExportControls />
             </aside>
           </Scrollable>
 

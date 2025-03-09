@@ -1,26 +1,22 @@
 import { useState } from "react";
-import { useCanvasStore } from "../hooks/useCanvasStore";
 import { usePaletteStore } from "../hooks/usePaletteStore";
 import Button from "../components/Button";
 import ColorInput from "../components/Input/ColorInput";
 import SidebarSection from "../components/SidebarSection";
 
 
-const Palette = () => {
+const PaletteControls = () => {
   const { colors, selectedColor, addColor, setSelectedColor } = usePaletteStore();
-  const { setColor } = useCanvasStore();
 
   const [tempColor, setTempColor] = useState(selectedColor);
 
   const handleColorSelect = (color: string) => {
     setSelectedColor(color);
-    setColor(color);
   };
 
   const handleAddColor = (color: string) => {
     addColor(color);
     setSelectedColor(color);
-    setColor(color);
   };
 
   return (
@@ -54,4 +50,4 @@ const Palette = () => {
   );
 };
 
-export default Palette;
+export default PaletteControls;

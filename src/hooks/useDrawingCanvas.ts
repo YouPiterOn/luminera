@@ -9,7 +9,7 @@ export function useDrawingCanvas(
   size: Size,
   pixelScale: number,
   zoom: number,
-  color: string,
+  selectedColor: string,
   clearCanvas: boolean,
   setClearCanvas: (value: boolean) => void,
 ) {
@@ -104,7 +104,7 @@ export function useDrawingCanvas(
     const x = Math.floor((e.clientX - rect.left) / pixelScale)
     const y = Math.floor((e.clientY - rect.top) / pixelScale)
 
-    ctx.fillStyle = color
+    ctx.fillStyle = selectedColor
 
     // If this is the first point, just draw it
     if (lastX.current === null || lastY.current === null) {
