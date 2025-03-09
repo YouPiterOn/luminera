@@ -1,21 +1,65 @@
-export function drawLine(ctx: CanvasRenderingContext2D, x0: number, y0: number, x1: number, y1: number) {
-  const dx = Math.abs(x1 - x0)
-  const dy = Math.abs(y1 - y0)
-  const sx = x0 < x1 ? 1 : -1
-  const sy = y0 < y1 ? 1 : -1
-  let err = dx - dy
+export function draw(ctx: CanvasRenderingContext2D, x: number, y: number, brushSize: number) {
+  ctx.fillRect(x - brushSize + 1, y - brushSize + 1, brushSize * 2 - 1, brushSize * 2 - 1);
+}
+
+export function clear(ctx: CanvasRenderingContext2D, x: number, y: number, brushSize: number) {
+  ctx.clearRect(x - brushSize + 1, y - brushSize + 1, brushSize * 2 - 1, brushSize * 2 - 1);
+}
+
+export function drawLine(
+  ctx: CanvasRenderingContext2D,
+  x0: number,
+  y0: number,
+  x1: number,
+  y1: number,
+  brushSize: number
+) {
+  const dx = Math.abs(x1 - x0);
+  const dy = Math.abs(y1 - y0);
+  const sx = x0 < x1 ? 1 : -1;
+  const sy = y0 < y1 ? 1 : -1;
+  let err = dx - dy;
 
   while (true) {
-    ctx.fillRect(x0, y0, 1, 1)
-    if (x0 === x1 && y0 === y1) break
-    const e2 = err * 2
+    draw(ctx, x0, y0, brushSize);
+    if (x0 === x1 && y0 === y1) break;
+    const e2 = err * 2;
     if (e2 > -dy) {
-      err -= dy
-      x0 += sx
+      err -= dy;
+      x0 += sx;
     }
     if (e2 < dx) {
-      err += dx
-      y0 += sy
+      err += dx;
+      y0 += sy;
+    }
+  }
+}
+
+export function clearLine(
+  ctx: CanvasRenderingContext2D,
+  x0: number,
+  y0: number,
+  x1: number,
+  y1: number,
+  brushSize: number
+) {
+  const dx = Math.abs(x1 - x0);
+  const dy = Math.abs(y1 - y0);
+  const sx = x0 < x1 ? 1 : -1;
+  const sy = y0 < y1 ? 1 : -1;
+  let err = dx - dy;
+
+  while (true) {
+    clear(ctx, x0, y0, brushSize);
+    if (x0 === x1 && y0 === y1) break;
+    const e2 = err * 2;
+    if (e2 > -dy) {
+      err -= dy;
+      x0 += sx;
+    }
+    if (e2 < dx) {
+      err += dx;
+      y0 += sy;
     }
   }
 }

@@ -4,6 +4,7 @@ interface PaletteState {
   colors: string[];
   selectedColor: string;
   addColor: (color: string) => void;
+  setColors: (colors: string[]) => void;
   setSelectedColor: (color: string) => void;
 }
 
@@ -14,5 +15,6 @@ export const usePaletteStore = create<PaletteState>((set) => ({
     set((state) => ({
       colors: state.colors.includes(color) ? state.colors : [...state.colors, color],
     })),
+  setColors: (colors) => set({ colors, selectedColor: colors[0] }),
   setSelectedColor: (color) => set({ selectedColor: color }),
 }));
