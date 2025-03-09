@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCanvasStore } from "../hooks/useCanvasStore";
 import Button from "../components/Button";
 import CheckboxInput from "../components/Input/CheckboxInput";
@@ -10,12 +10,6 @@ const CanvasControls = () => {
   const { showGrid, zoom, setClearCanvas, setZoom, setShowGrid } = useCanvasStore();
 
   const [isNewCanvasModalOpen, setIsNewCanvasModalOpen] = useState(false);
-
-  const [tempZoom, setTempZoom] = useState(zoom);
-
-  useEffect(() => {
-    setTempZoom(zoom);
-  }, [zoom])
 
   return (
     <SidebarSection name="Canvas Controls">
@@ -29,7 +23,7 @@ const CanvasControls = () => {
         </div>
 
         <BufferedNumberInput
-          value={tempZoom}
+          value={zoom}
           onDone={(value) => {
             setZoom(value);
           }}

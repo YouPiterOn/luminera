@@ -1,12 +1,13 @@
 import type React from "react"
 
 import { useEffect, useRef, useState } from "react"
-import { drawLine, resizeImageData, setupCanvas } from "../utils/canvasUtils"
-import { Size } from "../types/canvas"
+import { clear, clearLine, draw, drawLine, resizeImageData, setupCanvas } from "../utils/canvasUtils"
+import { Brush, BrushType, Size } from "../types/canvas"
 import { useCanvas } from "../context/CanvasContext";
 
 export function useDrawingCanvas(
   size: Size,
+  brush: Brush,
   pixelScale: number,
   zoom: number,
   selectedColor: string,
@@ -95,29 +96,36 @@ export function useDrawingCanvas(
   }
 
   const drawPixel = (e: React.MouseEvent) => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    const rect = canvas.getBoundingClientRect()
-    const x = Math.floor((e.clientX - rect.left) / pixelScale)
-    const y = Math.floor((e.clientY - rect.top) / pixelScale)
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.floor((e.clientX - rect.left) / pixelScale);
+    const y = Math.floor((e.clientY - rect.top) / pixelScale);
 
-    ctx.fillStyle = selectedColor
+    ctx.fillStyle = selectedColor;
 
-    // If this is the first point, just draw it
-    if (lastX.current === null || lastY.current === null) {
-      ctx.fillRect(x, y, 1, 1)
-    } else {
-      // Draw a line between last position and current position
-      drawLine(ctx, lastX.current, lastY.current, x, y)
+    if (brush.name === BrushType.Fill) {
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    } else if (brush.name === BrushType.Eraser) {
+      if (lastX.current === null || lastY.current === null) {
+        clear(ctx, x, y, brush.size);
+      } else {
+        clearLine(ctx, lastX.current, lastY.current, x, y, brush.size);
+      }
+    } else if (brush.name === BrushType.Pencil) {
+      if (lastX.current === null || lastY.current === null) {
+        draw(ctx, x, y, brush.size);
+      } else {
+        drawLine(ctx, lastX.current, lastY.current, x, y, brush.size);
+      }
     }
 
-    // Update last position
-    lastX.current = x
-    lastY.current = y
-  }
+    lastX.current = x;
+    lastY.current = y;
+  };
 
   return {
     isDrawing,

@@ -1,10 +1,9 @@
 import { create } from "zustand";
+import { Brush, BrushType, Size } from "../types/canvas";
 
 interface CanvasState {
-  size: {
-    width: number;
-    height: number;
-  }
+  size: Size;
+  brush: Brush;
   zoom: number;
   pixelScale: number;
   showGrid: boolean;
@@ -12,6 +11,7 @@ interface CanvasState {
   setWidth: (width: number) => void;
   setHeight: (height: number) => void;
   setSize: (width: number, height: number) => void;
+  setBrush: (brush: Brush) => void;
   setZoom: (zoom: number) => void;
   setShowGrid: (isOn: boolean) => void;
   setClearCanvas: (value: boolean) => void;
@@ -21,6 +21,10 @@ export const useCanvasStore = create<CanvasState>((set) => ({
   size: {
     width: 32,
     height: 32,
+  },
+  brush: {
+    name: BrushType.Pencil,
+    size: 1
   },
   zoom: 100,
   pixelScale: 8,
@@ -41,6 +45,7 @@ export const useCanvasStore = create<CanvasState>((set) => ({
       size: {width, height},
       pixelScale: Math.round((state.zoom / 100) * Math.max(1, 256 / Math.max(width, height)))
     })),
+  setBrush: (brush) => set({ brush }),
   setZoom: (zoom) =>
     set((state) => {
       const newZoom = Math.max(50, Math.min(zoom, 500));

@@ -1,3 +1,4 @@
+import BrushControls from "../blocks/BrushControls"
 import Canvas from "../blocks/Canvas"
 import CanvasControls from "../blocks/CanvasControls"
 import ExportControls from "../blocks/ExportControls"
@@ -19,6 +20,8 @@ const CanvasPage = () => {
               <CanvasControls />
 
               <PaletteControls />
+
+              <BrushControls />
 
               <ExportControls />
             </aside>
