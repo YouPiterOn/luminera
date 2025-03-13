@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { t } from "../trpc";
+import { palettesRouter } from "./palettes";
 
 export const appRouter = t.router({
   hello: t.procedure
@@ -7,6 +8,7 @@ export const appRouter = t.router({
     .query(({ input }) => {
       return { greeting: `Hello, ${input.name}!` };
     }),
+  palettes: palettesRouter
 });
 
 export type AppRouter = typeof appRouter;

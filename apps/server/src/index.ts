@@ -1,16 +1,14 @@
-import express from "express";
-import cors from "cors";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "./routes";
+import { Elysia } from 'elysia'
+import { cors } from '@elysiajs/cors'
+import { trpc } from '@elysiajs/trpc'
+import { appRouter } from '@luminera/trpc'
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use("/trpc", createExpressMiddleware({ router: appRouter }));
+const app = new Elysia()
+    .use(cors()) 
+    .get('/', () => 'Hello Elysia')
+    .use( 
+        trpc(appRouter)
+    ) 
+    .listen(3000)
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
-
-export default { app }
+console.log(`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`)

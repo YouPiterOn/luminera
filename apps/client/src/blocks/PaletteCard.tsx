@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "../components/Button";
-import { Palette } from "../types/palettes";
+import { Palette } from "@luminera/types";
 import { usePaletteStore } from "../hooks/usePaletteStore";
 
 type PaletteCardProps = {
