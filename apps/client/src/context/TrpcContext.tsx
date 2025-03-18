@@ -7,7 +7,7 @@ const TrpcProvider = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
-      links: [httpBatchLink({ url: 'http://localhost:3000/trpc' })],
+      links: [httpBatchLink({ url: import.meta.env.VITE_TRPC_URL })],
     })
   );
 

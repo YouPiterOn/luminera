@@ -4,7 +4,7 @@ import { trpc } from '@elysiajs/trpc'
 import { appRouter } from '@luminera/trpc'
 
 const app = new Elysia()
-    .use(cors()) 
+    //.use(cors()) 
     .get('/', () => 'Hello Elysia')
     .use( 
         trpc(appRouter)
