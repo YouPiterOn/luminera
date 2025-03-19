@@ -1,16 +1,21 @@
-import { useState } from "react";
-import Button from "../components/Button"
-import SidebarSection from "../components/SidebarSection"
-import { useCanvasStore } from "../hooks/useCanvasStore";
-import { useExportCanvas } from "../hooks/useExportCanvas"
+import { useCallback, useState } from "react";
+import Button from "../components/Button";
 import { InstantNumberInput } from "../components/Input/NumberInput";
+import Modal from "../components/Modal"
+import { useCanvasStore } from "../hooks/useCanvasStore";
+import { useExportCanvas } from "../hooks/useExportCanvas";
 
-const ExportControls = () => {
+type ExportFileModalProps = {
+  onClose?: () => void;
+  isOpen?: boolean;
+}
+
+const ExportFileModal = ({ onClose, isOpen }: ExportFileModalProps) => {
   const { exportToPNG } = useExportCanvas();
   const { size } = useCanvasStore();
   const [scale, setScale] = useState(1);
 
-  const handleDownload = async () => {
+  const handleDownload = useCallback(async () => {
     const dataUrl = await exportToPNG(size.width, size.height, scale);
     if(!dataUrl) return;
     const a = document.createElement("a");
@@ -19,20 +24,22 @@ const ExportControls = () => {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-  };
+    onClose?.();
+  }, [exportToPNG, size, scale])
 
   return (
-    <SidebarSection name="Export">
+    <Modal isOpen={isOpen}>
       <InstantNumberInput
         label="Upscale:"
         value={scale}
         onChange={(value) => setScale(value)}
       />
-      <div className="mt-2">
+      <div className="flex justify-between pr-6">
         <Button onClick={handleDownload}>Export to PNG</Button>
+        <Button onClick={() => onClose?.()}>Close</Button>
       </div>
-    </SidebarSection>
+    </Modal>
   )
 }
 
-export default ExportControls;
+export default ExportFileModal;

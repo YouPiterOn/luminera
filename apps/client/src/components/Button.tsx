@@ -5,9 +5,20 @@ type ButtonProps = {
   highlighted?: boolean;
 }
 
-const Button = ({ children, onClick, className, highlighted = false }: ButtonProps) => {
+const ButtonTemplate = ({ children, onClick, className }: ButtonProps) => {
   return (
     <button
+      onClick={onClick}
+      className={className || ''}
+    >
+      {children}
+    </button>
+  );
+};
+
+const Button = ({ children, onClick, className, highlighted = false }: ButtonProps) => {
+  return (
+    <ButtonTemplate
       onClick={onClick}
       className={`
         border-2 border-ebony-clay-950 min-w-15 px-1 cursor-pointer
@@ -16,8 +27,19 @@ const Button = ({ children, onClick, className, highlighted = false }: ButtonPro
       `}
     >
       {children}
-    </button>
-  );
-};
+    </ButtonTemplate>
+  )
+}
+
+export const BorderlessButton = ({ children, onClick, className }: ButtonProps) => {
+  return (
+    <ButtonTemplate
+      onClick={onClick}
+      className={`cursor-pointer bg-pearl-bush-200 text-ebony-clay-950 ${className || ''}`}
+    >
+      {children}
+    </ButtonTemplate>
+  )
+}
 
 export default Button;

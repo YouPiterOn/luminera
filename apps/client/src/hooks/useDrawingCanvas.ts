@@ -1,6 +1,6 @@
 import type React from "react"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { clear, clearLine, draw, drawLine, resizeImageData, setupCanvas } from "../utils/canvasUtils"
 import { Brush, BrushType, Size } from "../types/canvas"
 import { useCanvas } from "../context/CanvasContext";
@@ -71,30 +71,6 @@ export function useDrawingCanvas(
     setClearCanvas(false)
   }, [canvasRef, clearCanvas])
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDrawing(true)
-    lastX.current = null
-    lastY.current = null
-    drawPixel(e)
-  }
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDrawing) return
-    drawPixel(e)
-  }
-
-  const handleMouseUp = () => {
-    setIsDrawing(false)
-    lastX.current = null
-    lastY.current = null
-  }
-
-  const handleMouseLeave = () => {
-    setIsDrawing(false)
-    lastX.current = null
-    lastY.current = null
-  }
-
   const drawPixel = (e: React.MouseEvent) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -126,6 +102,30 @@ export function useDrawingCanvas(
     lastX.current = x;
     lastY.current = y;
   };
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    setIsDrawing(true)
+    lastX.current = null
+    lastY.current = null
+    drawPixel(e)
+  }, [setIsDrawing, drawPixel]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDrawing) return
+    drawPixel(e)
+  }, [isDrawing, drawPixel]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDrawing(false)
+    lastX.current = null
+    lastY.current = null
+  }, [setIsDrawing]);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsDrawing(false)
+    lastX.current = null
+    lastY.current = null
+  }, [setIsDrawing]);
 
   return {
     isDrawing,

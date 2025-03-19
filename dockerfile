@@ -5,6 +5,15 @@ ENV PATH="$PNPM_HOME:$PATH"
 
 FROM base AS build
 WORKDIR /app
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+COPY apps/client/package.json apps/client/
+COPY apps/server/package.json apps/server/
+
+COPY packages/trpc/package.json packages/trpc/
+COPY packages/types/package.json packages/types/
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 COPY . .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build

@@ -1,9 +1,10 @@
 import Header from "../blocks/Header";
 import PaletteCard from "../blocks/PaletteCard";
 import { trpc } from "../clients/trpc";
+import { palettesMock } from "../mocks/palettes.mock";
 
 const PalettesPage = () => {
-  const { data: palettes = [], error } = trpc.palettes.getPalettes.useQuery();
+  const { data: palettes = palettesMock, error } = trpc.palettes.getPalettes.useQuery();
 
   return (
     <div className="flex flex-col min-h-screen bg-pearl-bush-100 text-ebony-clay-950">
