@@ -1,9 +1,10 @@
 import type React from "react"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { clear, clearLine, draw, drawLine, resizeImageData, setupCanvas } from "../utils/canvasUtils"
+import { clear, clearLine, createDataUrl, draw, drawLine, resizeImageData, setupCanvas } from "../utils/canvasUtils"
 import { Brush, BrushType, Size } from "../types/canvas"
 import { useCanvas } from "../context/CanvasContext";
+import { useFramesStore } from "./useFramesStore";
 
 export function useDrawingCanvas(
   size: Size,
@@ -15,9 +16,30 @@ export function useDrawingCanvas(
   setClearCanvas: (value: boolean) => void,
 ) {
   const canvasRef = useCanvas();
+  const { frames, selectedFrameIndex, setFrameDataUrl } = useFramesStore();
   const [isDrawing, setIsDrawing] = useState(false)
   const lastX = useRef<number | null>(null)
   const lastY = useRef<number | null>(null)
+
+  // Handles frames change
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const img = new Image();
+    img.src = frames[selectedFrameIndex].dataUrl;
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+    };
+
+    return () => {
+      const dataUrl = createDataUrl(canvas, size.width, size.height, 1);
+      if (!dataUrl) return;
+      setFrameDataUrl(selectedFrameIndex, dataUrl);
+    }
+  }, [selectedFrameIndex]);
 
   // Handles zoom
   useEffect(() => {

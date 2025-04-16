@@ -15,8 +15,8 @@ const ExportFileModal = ({ onClose, isOpen }: ExportFileModalProps) => {
   const { size } = useCanvasStore();
   const [scale, setScale] = useState(1);
 
-  const handleDownload = useCallback(async () => {
-    const dataUrl = await exportToPNG(size.width, size.height, scale);
+  const handleDownload = useCallback(() => {
+    const dataUrl = exportToPNG(size.width, size.height, scale);
     if(!dataUrl) return;
     const a = document.createElement("a");
     a.href = dataUrl;

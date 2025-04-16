@@ -127,7 +127,7 @@ export function setupCanvas(canvas: HTMLCanvasElement, width: number, height: nu
   return ctx
 }
 
-export async function createDataUrl(
+export function createDataUrl(
   sourceCanvas: HTMLCanvasElement,
   pixelWidth: number,
   pixelHeight: number,
@@ -149,3 +149,17 @@ export async function createDataUrl(
   return canvas.toDataURL("image/png");
 }
 
+export function createEmptyDataUrl(width: number, height: number): string {
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    throw new Error("Canvas context could not be created.");
+  }
+
+  ctx.clearRect(0, 0, width, height);
+
+  return canvas.toDataURL("image/png");
+}

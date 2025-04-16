@@ -14,8 +14,8 @@ const CanvasSidebar = () => {
       <aside
         className={`
           md:relative fixed left-0 min-h-full bg-pearl-bush-200 border-r-4 border-cloudy-400
-          p-4 flex flex-col transition-all duration-300
-          ${isOpen ? "w-62" : "w-16"} z-50
+          p-4 flex flex-col transition-all duration-200
+          ${isOpen ? "w-62" : "w-16"} z-30
         `}
       >
         <div className="flex justify-end">
@@ -37,7 +37,7 @@ const CanvasSidebar = () => {
 
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 md:hidden z-40"
+          className="fixed inset-0 bg-black/50 md:hidden z-10"
           onClick={() => setIsOpen(false)}
         />
       )}

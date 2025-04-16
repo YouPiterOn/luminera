@@ -29,8 +29,8 @@ const BrushControls = () => {
   return (
     <SidebarSection name="Tools">
       <div className="space-y-2">
-        {brushes.map((b) => (
-          <div>
+        {brushes.map((b, i) => (
+          <div key={i}>
             <Button
               key={b.name}
               onClick={() => handleBrushChange(b)}

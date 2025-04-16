@@ -13,3 +13,8 @@ export enum BrushType {
   Eraser = "Eraser",
   Pencil = "Pencil",
 }
+
+export interface Frame {
+  dataUrl: string;
+  length: number;
+}
