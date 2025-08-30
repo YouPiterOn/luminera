@@ -2,8 +2,8 @@ import { useCallback, useState } from "react";
 import Button from "../components/Button";
 import { InstantNumberInput } from "../components/Input/NumberInput";
 import Modal from "../components/Modal"
-import { useCanvasStore } from "../hooks/useCanvasStore";
 import { useExportCanvas } from "../hooks/useExportCanvas";
+import { useCanvasSize } from "@luminera/drawing-canvas";
 
 type ExportFileModalProps = {
   onClose?: () => void;
@@ -12,7 +12,7 @@ type ExportFileModalProps = {
 
 const ExportFileModal = ({ onClose, isOpen }: ExportFileModalProps) => {
   const { exportToPNG } = useExportCanvas();
-  const { size } = useCanvasStore();
+  const size = useCanvasSize();
   const [scale, setScale] = useState(1);
 
   const handleDownload = useCallback(() => {

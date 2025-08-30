@@ -1,17 +1,9 @@
-export interface Size {
-  width: number
-  height: number
-}
+import { BrushHandler } from "@luminera/drawing-canvas";
 
 export interface Brush {
-  name: BrushType;
-  size: number;
-}
-
-export enum BrushType {
-  Fill = "Fill",
-  Eraser = "Eraser",
-  Pencil = "Pencil",
+  name: string;
+  resizable: boolean;
+  handler: BrushHandler;
 }
 
 export interface Frame {

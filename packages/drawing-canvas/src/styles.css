@@ -1,0 +1,14 @@
+.drawing-canvas-container {
+  position: relative;
+}
+
+.drawing-canvas-main {
+  cursor: crosshair;
+}
+
+.drawing-canvas-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}

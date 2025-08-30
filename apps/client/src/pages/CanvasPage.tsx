@@ -1,9 +1,8 @@
 import AnimationBar from "../blocks/AnimationBar"
-import Canvas from "../blocks/Canvas"
 import CanvasSidebar from "../blocks/CanvasSidebar"
 import Header from "../blocks/Header"
 import Scrollable from "../components/Scrollable"
-import { CanvasProvider } from "../context/CanvasContext"
+import { CanvasProvider, DrawingCanvas } from "@luminera/drawing-canvas"
 
 const CanvasPage = () => {
 
@@ -19,7 +18,9 @@ const CanvasPage = () => {
             <main className="flex flex-1 flex-row overflow-hidden items-center justify-center bg-pearl-bush-100">
               <div className="flex max-h-full max-w-full overflow-hidden">
                 <Scrollable>
-                  <Canvas />
+                  <div className="border-2 border-cloudy-400">
+                    <DrawingCanvas />
+                  </div>
                 </Scrollable>
               </div>
             </main>

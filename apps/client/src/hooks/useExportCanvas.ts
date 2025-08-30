@@ -1,8 +1,8 @@
-import { useCanvas } from "../context/CanvasContext";
+import { useCanvasRef } from "@luminera/drawing-canvas";
 import { createDataUrl } from "../utils/canvasUtils";
 
 export function useExportCanvas() {
-  const canvasRef = useCanvas()
+  const canvasRef = useCanvasRef()
 
   const exportToPNG = (width: number, height: number, scale: number = 1) => {
     const canvas = canvasRef.current

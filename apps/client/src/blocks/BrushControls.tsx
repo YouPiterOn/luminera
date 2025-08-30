@@ -1,29 +1,41 @@
 import SidebarSection from "../components/SidebarSection";
 import Button from "../components/Button";
 import { InstantNumberInput } from "../components/Input/NumberInput";
-import { useCanvasStore } from "../hooks/useCanvasStore";
-import { Brush, BrushType } from "../types/canvas";
+import { Brush } from "../types/canvas";
 import { useState } from "react";
+import { useCanvasParamsActions, useCanvasParamsStore } from "@luminera/drawing-canvas";
 
-const brushes = [
-  { name: BrushType.Pencil, size: 1 },
-  { name: BrushType.Eraser, size: 1 },
-  { name: BrushType.Fill, size: 0 },
+const brushes: Brush[] = [
+  {
+    name: 'pencil',
+    resizable: true,
+    handler: (ctx, x, y, brushSize) => {
+      ctx.fillRect(x - brushSize + 1, y - brushSize + 1, brushSize * 2 - 1, brushSize * 2 - 1);
+    },
+  },
+  {
+    name: 'eraser',
+    resizable: true,
+    handler: (ctx, x, y, brushSize) => {
+      ctx.clearRect(x - brushSize + 1, y - brushSize + 1, brushSize * 2 - 1, brushSize * 2 - 1);
+    },
+  }
 ];
 
 const BrushControls = () => {
-  const { brush, setBrush } = useCanvasStore();
+  const [selectedBrush, setSelectedBrush] = useState<Brush>(brushes[0]);
 
-  const [tempSize, setTempSize] = useState(brush.size);
+  const brushSize = useCanvasParamsStore((state) => state.brushSize);
+
+  const { setBrushSize, setBrushHandler } = useCanvasParamsActions();
 
   const handleSizeChange = (value: number) => {
-    setTempSize(value);
-    setBrush({ ...brush, size: value });
+    setBrushSize(value);
   }
 
   const handleBrushChange = (b: Brush) => {
-    setBrush(b);
-    setTempSize(b.size);
+    setSelectedBrush(b);
+    setBrushHandler(b.handler);
   }
 
   return (
@@ -34,19 +46,19 @@ const BrushControls = () => {
             <Button
               key={b.name}
               onClick={() => handleBrushChange(b)}
-              highlighted={brush.name === b.name}
+              highlighted={selectedBrush.name === b.name}
             >
               {b.name}
             </Button>
           </div>
         ))}
 
-        {brush.name !== BrushType.Fill && (
+        {selectedBrush.resizable && (
           <InstantNumberInput
-            value={tempSize}
+            value={brushSize}
             onChange={handleSizeChange}
             unit={1}
-            label={`${brush.name} size:`}
+            label={`${selectedBrush.name} size:`}
           />
         )}
       </div>

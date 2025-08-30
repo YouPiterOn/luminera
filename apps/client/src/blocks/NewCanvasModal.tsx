@@ -1,8 +1,8 @@
-import { useCanvasStore } from "../hooks/useCanvasStore";
 import Button from "../components/Button";
 import { useCallback, useState } from "react";
 import { InstantNumberInput } from "../components/Input/NumberInput";
 import Modal from "../components/Modal";
+import { useCanvasParamsActions, useCanvasSize } from "@luminera/drawing-canvas";
 
 type NewCanvasModalProps = {
   onClose?: () => void;
@@ -10,7 +10,8 @@ type NewCanvasModalProps = {
 }
 
 const NewCanvasModal = ({ onClose, isOpen }: NewCanvasModalProps) => {
-  const { size, setSize, setClearCanvas } = useCanvasStore();
+  const { setSize, setClearCanvas } = useCanvasParamsActions();
+  const size = useCanvasSize();
 
   const [tempWidth, setTempWidth] = useState(size.width);
   const [tempHeight, setTempHeight] = useState(size.height);

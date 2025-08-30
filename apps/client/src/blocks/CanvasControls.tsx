@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { useCanvasStore } from "../hooks/useCanvasStore";
 import Button from "../components/Button";
 import CheckboxInput from "../components/Input/CheckboxInput";
 import NewCanvasModal from "./NewCanvasModal";
 import { BufferedNumberInput } from "../components/Input/NumberInput";
 import SidebarSection from "../components/SidebarSection";
 import ExportFileModal from "./ExportFileModal";
+import { useCanvasParamsActions, useCanvasParamsStore } from "@luminera/drawing-canvas";
 
 const CanvasControls = () => {
-  const { showGrid, zoom, setClearCanvas, setZoom, setShowGrid } = useCanvasStore();
+  const showGrid = useCanvasParamsStore((state) => state.showGrid);
+  const zoom = useCanvasParamsStore((state) => state.zoom);
+  const { setClearCanvas, setZoom, setShowGrid } = useCanvasParamsActions();
 
   const [isNewCanvasModalOpen, setIsNewCanvasModalOpen] = useState(false);
   const [isExportFileModalOpen, setIsExportFileModalOpen] = useState(false);

@@ -3,10 +3,13 @@ import { usePaletteStore } from "../hooks/usePaletteStore";
 import Button from "../components/Button";
 import ColorInput from "../components/Input/ColorInput";
 import SidebarSection from "../components/SidebarSection";
+import { useCanvasParamsActions, useCanvasParamsStore } from "@luminera/drawing-canvas";
 
 
 const PaletteControls = () => {
-  const { colors, selectedColor, addColor, setSelectedColor } = usePaletteStore();
+  const { colors, addColor } = usePaletteStore();
+  const selectedColor = useCanvasParamsStore((state) => state.selectedColor);
+  const { setSelectedColor } = useCanvasParamsActions();
 
   const [tempColor, setTempColor] = useState(selectedColor);
 

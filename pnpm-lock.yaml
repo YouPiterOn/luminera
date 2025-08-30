@@ -14,6 +14,9 @@ importers:
 
   apps/client:
     dependencies:
+      '@luminera/drawing-canvas':
+        specifier: workspace:^
+        version: link:../../packages/drawing-canvas
       '@luminera/trpc':
         specifier: workspace:^
         version: link:../../packages/trpc
@@ -74,7 +77,7 @@ importers:
         version: 15.15.0
       tailwindcss:
         specifier: ^4.0.8
-        version: 4.0.12
+        version: 4.1.5
       typescript:
         specifier: ~5.7.2
         version: 5.7.3
@@ -112,6 +115,22 @@ importers:
       typescript:
         specifier: ~5.7.2
         version: 5.7.3
+
+  packages/drawing-canvas:
+    dependencies:
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+      zustand:
+        specifier: ^5.0.3
+        version: 5.0.3(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
+    devDependencies:
+      '@types/react':
+        specifier: ^19.0.8
+        version: 19.0.10
 
   packages/trpc:
     dependencies:
@@ -1298,6 +1317,9 @@ packages:
 
   tailwindcss@4.0.12:
     resolution: {integrity: sha512-bT0hJo91FtncsAMSsMzUkoo/iEU0Xs5xgFgVC9XmdM9bw5MhZuQFjPNl6wxAE0SiQF/YTZJa+PndGWYSDtuxAg==}
+
+  tailwindcss@4.1.5:
+    resolution: {integrity: sha512-nYtSPfWGDiWgCkwQG/m+aX83XCwf62sBgg3bIlNiiOcggnS1x3uVRDAuyelBFL+vJdOPPCGElxv9DjHJjRHiVA==}
 
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
@@ -2533,6 +2555,8 @@ snapshots:
       has-flag: 4.0.0
 
   tailwindcss@4.0.12: {}
+
+  tailwindcss@4.1.5: {}
 
   tapable@2.2.1: {}
 
