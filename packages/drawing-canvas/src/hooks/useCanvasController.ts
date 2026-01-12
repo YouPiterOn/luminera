@@ -3,9 +3,9 @@ import type React from "react"
 import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { handleLine, resizeImageData, setupCanvas } from "../utils/canvasUtils"
 import { useCanvasParamsStore } from "./useCanvasParamsStore";
-import { CanvasContext } from "../contexts/canvasContext";
-import history from '../utils/history';
+import { CanvasContext } from "../contexts/CanvasContext";
 import { useCanvasBlob } from "./useCanvasBlob";
+import { useCanvasHistory } from "./useCanvasHistory";
 
 export function useCanvasController() {
   const canvasRef = useContext(CanvasContext)?.canvasRef
@@ -17,6 +17,7 @@ export function useCanvasController() {
   const [isDrawing, setIsDrawing] = useState(false)
   const lastX = useRef<number | null>(null)
   const lastY = useRef<number | null>(null)
+  const history = useCanvasHistory();
 
   // Handles zoom
   useEffect(() => {
@@ -90,7 +91,7 @@ export function useCanvasController() {
       handleLine(ctx, lastX.current, lastY.current, x, y, brushSize, brushHandler);
     }
 
-    history.addAction({
+    history.push({
       currentX: x,
       currentY: y,
       lastX: lastX.current,

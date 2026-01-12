@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import NavLink from "../components/NavLink";
 
-const Header = ({}) => {
+const Header = () => {
   return (
     <header className="border-b-4 border-cloudy-400 bg-sisal-300 px-4 py-2">
       <div className="flex justify-between items-center">

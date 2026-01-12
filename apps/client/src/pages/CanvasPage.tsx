@@ -3,11 +3,12 @@ import CanvasSidebar from "../blocks/CanvasSidebar"
 import Header from "../blocks/Header"
 import Scrollable from "../components/Scrollable"
 import { CanvasProvider, DrawingCanvas } from "@luminera/drawing-canvas"
+import { canvasHistoryStore } from "../store/canvasHistoryStore"
 
 const CanvasPage = () => {
 
   return (
-    <CanvasProvider>
+    <CanvasProvider history={canvasHistoryStore}>
       <div className="flex flex-col h-screen bg-pearl-bush-100 text-ebony-clay-950">
         <Header />
 

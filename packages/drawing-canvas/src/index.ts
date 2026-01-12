@@ -1,4 +1,5 @@
-export { CanvasProvider } from './contexts/canvasContext'
-export { DrawingCanvas } from './components/drawingCanvas'
-export { type BrushHandler } from './types'
+export { CanvasProvider } from './contexts/CanvasContext'
+export { DrawingCanvas } from './components/DrawingCanvas'
+export * from './types'
 export * from './hooks'
+export * from './store/historyStore'

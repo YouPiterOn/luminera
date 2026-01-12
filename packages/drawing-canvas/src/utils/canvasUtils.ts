@@ -58,6 +58,7 @@ export async function resizeImageData(imageData: ImageData, width: number, heigh
   canvas.width = resizeWidth
   canvas.height = resizeHeight
   const ctx = canvas.getContext("2d")
+  canvas.remove()
   if (!ctx) return null
 
   ctx.imageSmoothingEnabled = false
@@ -66,6 +67,7 @@ export async function resizeImageData(imageData: ImageData, width: number, heigh
   tempCanvas.width = imageData.width
   tempCanvas.height = imageData.height
   const tempCtx = tempCanvas.getContext("2d")
+  tempCanvas.remove()
   if (!tempCtx) return null
   tempCtx.putImageData(imageData, 0, 0)
 
@@ -112,7 +114,10 @@ export function createDataUrl(
 
   ctx.drawImage(sourceCanvas, 0, 0, outputWidth, outputHeight)
 
-  return canvas.toDataURL("image/png");
+  const dataUrl = canvas.toDataURL("image/png")
+  canvas.remove()
+
+  return dataUrl;
 }
 
 export function createEmptyDataUrl(width: number, height: number): string {
@@ -127,5 +132,8 @@ export function createEmptyDataUrl(width: number, height: number): string {
 
   ctx.clearRect(0, 0, width, height);
 
-  return canvas.toDataURL("image/png");
+  const dataUrl = canvas.toDataURL("image/png")
+  canvas.remove()
+
+  return dataUrl;
 }
