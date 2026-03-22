@@ -83,6 +83,8 @@ export function useCanvasController() {
     const x = Math.floor((e.clientX - rect.left) / pixelScale);
     const y = Math.floor((e.clientY - rect.top) / pixelScale);
 
+    if(x === lastX.current && y === lastY.current) return;
+
     ctx.fillStyle = selectedColor;
 
     if (lastX.current === null || lastY.current === null) {
